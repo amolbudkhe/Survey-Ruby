@@ -17,11 +17,12 @@ class Survey
     loop do
       data = load_data
       correct_answer = 0
+      puts "\nPlease enter the Answers in 'Yes', 'Y', 'No' or 'N' format only. \n\n"
       QUESTIONS.each_key do |question_key|
         print QUESTIONS[question_key]
         ans = gets.chomp
         if ans != "Yes" && ans != "Y" && ans != "No" && ans != "N"
-          puts "Incorrect value entered. Please answer the question in 'Yes', 'Y', 'No' or 'N' format only."
+          puts "Incorrect value entered. Please answer the question in 'Yes', 'Y', 'No' or 'N' format only. \n"
           redo
         elsif ans == "Yes" || ans == "Y"
           correct_answer += 1
@@ -29,13 +30,13 @@ class Survey
       end
 
       rating = (correct_answer.to_i * 100)/QUESTIONS.count
-      puts "Rating for this run: #{rating}"
+      puts "\n Rating for this run: #{rating}\n "
 
       save_data({ correct_answers: correct_answer, rating: rating })
       average_rating = calculate_average_rating(data + [{ rating: rating }])
-      puts "Average rating across all runs: #{average_rating}"
+      puts "\n Average rating across all runs: #{average_rating}\n "
 
-      print "Do you want to run the survey again? (Yes/No): "
+      print "\n Do you want to run the survey again? (Yes/No): \n"
       answer = gets.chomp.downcase
       break unless %w[yes y].include?(answer)
     end
